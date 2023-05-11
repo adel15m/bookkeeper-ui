@@ -16,8 +16,8 @@ export class ExpenseService {
   getAll()  : Observable<any>{
     return this.http.get<any>("http://localhost:8080/expenses/getall");
   }
-  deleteOne(id: any): Observable<any> {
-    return this.http.delete<any>(`http://localhost:8080/expenses/delone/${id}`);
+  deleteOne(id: any): Observable<void> {
+    return this.http.delete<void>(`http://localhost:8080/expenses/delone/${id}`);
   }
   addOne(expense: any): Observable<any> {
     return this.http.post<any>('http://localhost:8080/expenses/save', expense);
