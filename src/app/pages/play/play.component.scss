@@ -1,0 +1,8 @@
+th.asc::after {
+  content: ' ▲';
+}
+
+th.desc::after {
+  content: ' ▼';
+  transform: rotate(180deg);
+}

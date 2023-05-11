@@ -1,0 +1,28 @@
+
+<button class="btn btn-outline-primary" (click)="addOne()">+1</button>
+<p>Counter: {{counter}}</p>
+
+<input [(ngModel)]="result" type="number">
+{{result * this.counter}}
+
+<p *ngIf="counter%2==0">
+  Counter is even
+</p>
+
+<p *ngIf="counter%2!=0">
+  Counter is odd
+</p>
+
+<table class="table table-bordered border-primary">
+  <tr>
+    <th>Number1</th>
+    <th>Name2</th>
+  </tr>
+  <tr *ngFor="let str of list; let i = index">
+    <td>{{i}}</td><td>
+    {{str.toUpperCase()}}
+  </td>
+  </tr>
+</table>
+
+
