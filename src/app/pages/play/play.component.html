@@ -49,10 +49,8 @@
     <td>{{ expense.date }}</td>
     <td>{{ expense.type }}</td>
     <td>
-      <div class="button-container">
-        <button (click)="deleteExpense(expense)" class="btn btn-danger">Delete</button>
-        <button (click)="showRowDetails(expense)" class="btn btn-info">Edit</button>
-      </div>
+      <button (click)="deleteExpense(expense)" class="btn btn-danger">Delete</button>
+      <button (click)="showRowDetails(expense)" class="btn btn-info">Edit</button>
     </td>
   </tr>
   </tbody>
