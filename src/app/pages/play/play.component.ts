@@ -22,6 +22,10 @@ export class PlayComponent {
     private expenseService: ExpenseService,
     private modalService: NgbModal
   ) {
+    this.reloadList();
+  }
+
+  reloadList(){
     this.expenseService.getAll().subscribe((value) => {
       this.expens = value;
     });
@@ -42,7 +46,9 @@ export class PlayComponent {
     this.expenseService.addOne(this.newExpense).subscribe(
       (response) => {
         console.log('Expense added successfully!');
-        window.location.reload();
+        this.reloadList();
+        // close the window
+        this.modalService.dismissAll();
       },
       (error) => {
         console.log('Error adding expense:', error);
@@ -59,7 +65,7 @@ export class PlayComponent {
     this.expenseService.deleteOne(id.id).subscribe(
       (response) => {
         console.log('Expense deleted successfully!');
-        window.location.reload();
+        this.reloadList();
       },
       (error) => {
         console.log('Error deleting expense:', error);
