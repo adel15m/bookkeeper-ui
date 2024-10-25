@@ -1,14 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {MainComponent} from "./pages/main/main.component";
-import {TestingComponent} from "./pages/testing/testing.component";
-import {PlayComponent} from "./pages/play/play.component";
+import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/register/register.component';
+import { PlayComponent } from './pages/play/play.component';
+import {IsLoggedInGuard} from "./guard/is-logged-in.guard";
+
 const routes: Routes = [
-  { path: 'main', component: MainComponent },
-  { path: 'test', component: TestingComponent },
-  { path: 'play', component: PlayComponent },
-  { path: '',   redirectTo: '/main', pathMatch: 'full' },
-  { path: '**', component: TestingComponent }
+  // todo: if already logged in, redirect to play
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'play', component: PlayComponent, canActivate: [IsLoggedInGuard]},
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '**', redirectTo: '/login' }
 ];
 
 @NgModule({
