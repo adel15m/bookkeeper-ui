@@ -1,45 +1,22 @@
-<p>play works!</p>
-
 <button type="button" (click)="showAddExpenseModal()" class="btn btn-primary">Add</button>
 <button type="button" (click)="showSummary()" class="btn btn-primary">Summary</button>
-
+<button type="button" (click)="logout()" class="btn btn-danger">Logout</button>
 <!--main table================================================================================== -->
 <table class="table table-striped table-hover">
   <thead>
   <tr>
-    <th (click)="sort('name')">
-      Name
-      <span *ngIf="currentSortColumn === 'name'">
+
+
+
+    <th *ngFor="let col of columnNames" (click)="sort(col)">
+      {{col}}
+      <span *ngIf="currentSortColumn === col">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
   <path d="M12 15.5l-6-6.5h12l-6 6.5zm-6-8.5h12v1.5H6v-1.5z" fill="currentColor"/>
 </svg>
         </span>
     </th>
-    <th (click)="sort('amount')">
-      Amount
-      <span *ngIf="currentSortColumn === 'amount'">
-         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-  <path d="M12 15.5l-6-6.5h12l-6 6.5zm-6-8.5h12v1.5H6v-1.5z" fill="currentColor"/>
-</svg>
-        </span>
-    </th>
-    <th (click)="sort('date')">
-      Date
-      <span *ngIf="currentSortColumn === 'date'">
-       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-  <path d="M12 15.5l-6-6.5h12l-6 6.5zm-6-8.5h12v1.5H6v-1.5z" fill="currentColor"/>
-</svg>
-        </span>
-    </th>
-    <th (click)="sort('type')">
-      Type
-      <span *ngIf="currentSortColumn === 'type'">
-         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-  <path d="M12 15.5l-6-6.5h12l-6 6.5zm-6-8.5h12v1.5H6v-1.5z" fill="currentColor"/>
-</svg>
-        </span>
-    </th>
-    <th>  </th>
+    <th></th>
   </tr>
   </thead>
   <tbody>

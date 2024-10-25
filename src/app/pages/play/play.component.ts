@@ -1,13 +1,17 @@
-import {Component, ViewChild} from '@angular/core';
+import {AfterContentInit, Component, DoCheck, OnChanges, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ExpenseService} from '../../services/expense.service';
 import {NgbModal, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {ActivatedRoute, Route, Router, RouterLink, RouterStateSnapshot} from "@angular/router";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-play',
   templateUrl: './play.component.html',
   styleUrls: ['./play.component.scss'],
 })
-export class PlayComponent {
+export class PlayComponent implements OnInit, OnDestroy {
+
+
   expens: any;
   showModal = false;
   newExpense: any = {};
@@ -15,20 +19,87 @@ export class PlayComponent {
   currentSortColumn: any;
   isSortAscending: boolean = true;
 
+  columnNames: string[] = ['name', 'amount', 'date', 'type'];
+
   @ViewChild('addExpenseModal', {static: false}) addExpenseModal: any;
   @ViewChild('summaryModal', {static: false}) summaryModal: any;
 
   constructor(
     private expenseService: ExpenseService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
-    this.reloadList();
+
+    console.log("PlayComponent constructor");
+    this.route.queryParams.subscribe(params => {
+          console.log(params);
+        }
+      );
   }
 
-  reloadList(){
-    this.expenseService.getAll().subscribe((value) => {
-      this.expens = value;
+  test2():Promise<number> {
+    return new Promise<number>((resolve, reject) => {
+      resolve(this.countPrimes());
+    })
+  }
+
+  test() : Observable<number> {
+    return new Observable<number>(subscriber => {
+      subscriber.next(this.countPrimes());
+      subscriber.complete();
     });
+  }
+
+
+  // component lifecycle
+  // https://angular.io/guide/lifecycle-hooks
+  ngOnInit(): void {
+    this.reloadList();
+    // this.test2()
+    //   .then(value => {
+    //   console.log("number of primes", value);
+    // });
+    // console.log("after starting primes")
+  }
+
+  ngOnDestroy(): void {
+    console.log("PlayComponent ngOnDestroy");
+  }
+
+  countPrimes(): number {
+    let count = 0;
+    const maxCheck = 200000;
+
+    for (let i = 2; i < maxCheck; i++) {
+      if (this.isPrime(i)) {
+        count++;
+      }
+    }
+
+    return count;
+  }
+
+  isPrime(n: number): boolean {
+    for (let i = 2; i < n; i++) {
+      if (n % i === 0) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+
+  reloadList() {
+    this.expenseService.getAll()
+      .subscribe((value) => {
+        this.expens = value.list;
+      });
+  }
+
+  logout() {
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
   }
 
   showAddExpenseModal() {
@@ -54,6 +125,7 @@ export class PlayComponent {
         console.log('Error adding expense:', error);
       }
     );
+    console.log("Made call!");
   }
 
   showRowDetails(expense: any) {
@@ -95,7 +167,7 @@ export class PlayComponent {
       this.isSortAscending = !this.isSortAscending;
     } else {
       this.currentSortColumn = columnName;
-      this.isSortAscending = true;
+      this.isSortAscending = false;
     }
 
     this.expens.sort((a: any, b: any) => {

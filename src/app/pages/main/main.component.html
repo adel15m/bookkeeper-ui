@@ -20,7 +20,7 @@
   </tr>
   <tr *ngFor="let str of list; let i = index">
     <td>{{i}}</td><td>
-    {{str.toUpperCase()}}
+    {{str | uppercase}}
   </td>
   </tr>
 </table>
